@@ -1,0 +1,2 @@
+*.nsi filter=lfs diff=lfs merge=lfs -text
+nssi* filter=lfs diff=lfs merge=lfs -text

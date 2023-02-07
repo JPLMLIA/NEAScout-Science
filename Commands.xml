@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?oxygen RNGSchema="file:../xml/ISF_Component_Schema.rnc" type="compact"?>
+
+<!--====================================================================== 
+
+  Neasc
+  neascout_science
+  Commands
+
+======================================================================-->
+
+
+<commands
+  opcode_base="$NeascoutScienceIdBase"
+>
+ 
+        <command kind="async" opcode="0" mnemonic="NEAS_SCIENCE_CMD_L1">
+            <comment>
+            Run the L1 pipeline on an image
+            </comment>
+            <args>
+                <arg name="rawFrame" type="string" size="122">
+                    <comment>The raw instrument data from the camera</comment>
+                </arg>
+                <arg name="outFrame" type="string" size="122">
+                    <comment>File path for radiometrically-calibrated output</comment>
+                </arg>
+                <arg name="ffFrame1" type="string" size="122">
+                    <comment>File path for flat field m_array file</comment>
+                </arg>
+                <arg name="ffFrame2" type="string" size="122">
+                    <comment>File path for flat field b_array file</comment>
+                </arg>
+                <arg name="badFrame" type="string" size="122">
+                    <comment>File path for bad pixel corection mask file</comment>
+                </arg>
+                <arg name="darkFrame" type="string" size="122">
+                    <comment>File path for dark current mask file</comment>
+                </arg>
+                <arg name="fixPt" type="U32">
+                    <comment>Fixed point conversion value.  Nominally 1.</comment>
+                </arg>
+                <arg name="unpack_only" type="U32">
+                    <comment>If >0 just unpack the data without applying calibration</comment>
+                </arg>
+                <arg name="temperature" type="I16">
+                    <comment>If -99 use the image header temperature. Otherwise, use the value specified for flat field interpolation</comment>
+                </arg>  
+             </args>
+        </command>
+
+        <command kind="async" opcode="1" mnemonic="NEAS_SCIENCE_CMD_COADD" >
+            <comment>
+            Coalign and coadd many frames
+            </comment>
+            <args>
+                <arg name="nFrames" type="I16">
+                    <comment>Number of frames to coalign</comment>
+                </arg>          
+                <arg name="baseFrame" type="string" size="122">
+                    <comment>base file path for input frames</comment>
+                </arg>         
+                <arg name="outFrame" type="string" size="122">
+                    <comment>output file path</comment>
+                </arg>
+                <arg name="numStars" type="U32">
+                    <comment>number of stars to search for in coaddition.  Nominally 5-10</comment>
+                </arg>
+                <arg name="searchRadius" type="U32">
+                    <comment>radius of search area of reference star shift (pixels).</comment>
+                </arg>
+                <arg name="scaling" type="F64">
+                    <comment>Scaling value utilized in coaddition xcorr/shift calculation. Nominally 1.</comment>
+                </arg>
+                <arg name="fixPt" type="U32">
+                    <comment>Fixed point conversion value.  Nominally 1.</comment>
+                </arg>
+                <arg name="calcShift" type="U32">
+                    <comment>1 for consider shift, 0 for no shift</comment>
+                </arg>
+
+             </args>
+        </command>
+
+        <command kind="async" opcode="2" mnemonic="NEAS_SCIENCE_CMD_CROP" >
+            <comment>
+            Crop an image and/or compress it with ICER
+            </comment>
+            <args>
+                <arg name="inFrame" type="string" size="122">
+                    <comment>input frame filepath</comment>
+                </arg>          
+                <arg name="outFrame" type="string" size="122">
+                    <comment>output data filepath</comment>
+                </arg>          
+                <arg name="cropLeft" type="I16">
+                    <comment>left of subwindow bounding box, skip cropping if less than or equal to 0</comment>
+                </arg>          
+                <arg name="cropTop" type="I16">
+                    <comment>top of subwindow bounding box, skip cropping if less than or equal to 0</comment>
+                </arg>          
+                <arg name="cropWidth" type="I16">
+                    <comment>width of subwindow, skip cropping if less than or equal to 0 </comment>
+                </arg>          
+                <arg name="cropHeight" type="I16">
+                    <comment>height of subwindow, skip cropping if less than or equal to 0</comment>
+                </arg>           
+                <arg name="search" type="I16">
+                    <comment>if less than or equal to zero, search for the brightest pixel in the subwindow and apply further cropping with this diameter</comment>
+                </arg>         
+                <arg name="compressionRate" type="F32">
+                    <comment>bits per pixel. greater than 12 = lossless, less than 0 = no compression </comment>
+                </arg>
+                <arg name="downsampleFactor" type="I16">
+                    <comment>If larger than zero, will downsample image at rate requested.  4 will give an image 1/4 the size of the original.  Overrides cropping, but not compression.</comment>
+                </arg>  
+                <arg name="min_loss" type="I16">
+                    <comment>ICER minimum loss parameter.</comment>
+                </arg>
+                <arg name="filtype" type="I16">
+                    <comment>ICER wavelet fill type.</comment>
+                </arg>
+                <arg name="ndecomps" type="I16">
+                    <comment>Number of ICER decompositions.</comment>
+                </arg>
+                <arg name="nseg" type="I16">
+                    <comment>Number of ICER segments.</comment>
+                </arg>
+             </args>
+        </command>
+
+        <command kind="async" opcode="3" mnemonic="NEAS_SCIENCE_CMD_DETECT" >
+            <comment>
+            Blur two frames and subtract them.
+            </comment>
+            <args>     
+                <arg name="inFrameA" type="string" size="122">
+                    <comment>input frame</comment>
+                </arg>         
+                <arg name="inFrameB" type="string" size="122">
+                    <comment>input frame</comment>
+                </arg>         
+                <arg name="outFrame" type="string" size="122">
+                    <comment>output file path</comment>
+                </arg>
+                <arg name="sigma" type="F32">
+                    <comment>width of Gaussian kernel</comment>
+                </arg>
+                <arg name="aligned" type="I16">
+                    <comment>True (1) if images should be aligned before subtraction, else false (0).</comment>
+                </arg>
+                <arg name="searchRadius" type="U32">
+                    <comment>radius of search area of reference star shift (pixels).</comment>
+                </arg>
+                <arg name="numStars" type="U32">
+                    <comment>number of stars to use as reference when optionally determining shift.  Nominally 5-10</comment>
+                </arg>
+                <arg name="scaling" type="F64">
+                    <comment>Scaling value utilized in coaddition xcorr/shift calculation. Nominally 1.</comment>
+                </arg>
+                <arg name="gaussKernelWidth" type="I32">
+                    <comment>Width of the Gaussian kernel.  Nominally 2, or 4, times the sigma value</comment>
+                </arg>
+                <arg name="gaussKernelScale" type="F64">
+                    <comment>Scaling factor of the Gaussian kernel used in the detection sequence.  Nominally one, or two.</comment>
+                </arg>
+                <arg name="fixPt" type="U32">
+                    <comment>Fixed point conversion value.  Nominally 1.</comment>
+                </arg>
+             </args>
+        </command>
+
+        <command kind="async" opcode="4" mnemonic="NEAS_SCIENCE_CMD_IMGSTAT" >
+            <comment>
+            Calculate the statistics and integrity of an image, and possibly compare it to another. 
+            </comment>
+            <args>
+                <arg name="frameA" type="string" size="122">
+                    <comment>primary frame to analyze</comment>
+                </arg>         
+                <arg name="frameB" type="string" size="122">
+                    <comment>if length larger than 1, secondary frame for comparison</comment>
+                </arg>
+                <arg name="bin0HistMax" type="I32">
+                    <comment>Defines bin 0 max value for ImgStat histogram.  See ICD.</comment>
+                </arg>
+                <arg name="bin1HistMax" type="I32">
+                    <comment>Defines bin 1 max value for ImgStat histogram.  See ICD.</comment>
+                </arg>
+                <arg name="bin4HistMax" type="I32">
+                    <comment>Defines bin 4 max value for ImgStat histogram.  See ICD.</comment>
+                </arg>
+                <arg name="bin5HistMax" type="I32">
+                    <comment>Defines bin 5 max value for ImgStat histogram.  See ICD.</comment>
+                </arg>
+             </args>
+        </command>
+
+        <command kind="async" opcode="5" mnemonic="NEAS_SCIENCE_CMD_MASK_UPDATE" >
+            <comment>
+            Update flight bad pixel mask
+            </comment>
+            <args>     
+                <arg name="inFrame" type="string" size="122">
+                    <comment>original bad pixel mask</comment>
+                </arg>         
+                <arg name="outFrame" type="string" size="122">
+                    <comment>result bad pixel mask</comment>
+                </arg>         
+                <arg name="row" type="I16">
+                    <comment>row to be adjusted (zero based)</comment>
+                </arg>
+                <arg name="col" type="I16">
+                    <comment>col to be adjusted (zero based)</comment>
+                </arg>
+                <arg name="value" type="I16">
+                    <comment>new value. 0 for good pixel, 1 for bad.</comment>
+                </arg>
+             </args>
+        </command>
+
+
+    </commands>

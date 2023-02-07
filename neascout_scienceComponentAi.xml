@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?oxygen RNGSchema="file:../xml/ISF_Component_Schema.rnc" type="compact"?>
+
+<component name="neascout_science" kind="active" namespace="Neasc" modeler="true">
+
+    <import_port_type>Fw/Time/TimePortAi.xml</import_port_type>
+    <import_port_type>Fw/Cmd/CmdRegPortAi.xml</import_port_type>
+    <import_port_type>Fw/Log/LogPortAi.xml</import_port_type>
+    <import_port_type>Fw/Buffer/BufferGetPortAi.xml</import_port_type>
+    <import_port_type>Fw/Cmd/CmdPortAi.xml</import_port_type>
+    <import_port_type>Svc/Ping/PingPortAi.xml</import_port_type>
+    <import_port_type>Fw/Buffer/BufferSendPortAi.xml</import_port_type>
+    <import_port_type>Fw/Cmd/CmdResponsePortAi.xml</import_port_type>
+    <import_dictionary>LfNeasc/Neasc/neascout_science/Commands.xml</import_dictionary>
+    <import_dictionary>LfNeasc/Neasc/neascout_science/Events.xml</import_dictionary>
+    <ports>
+    
+
+        <port name="timeCaller" data_type="Fw::Time"  kind="output" role="TimeGet"    max_number="1">
+        </port>
+
+        <port name="cmdRegOut" data_type="Fw::CmdReg"  kind="output" role="CmdRegistration"    max_number="1">
+        </port>
+
+        <port name="eventOut" data_type="Fw::Log"  kind="output" role="LogEvent"    max_number="1">
+        </port>
+
+        <port name="bufferGetCaller" data_type="Fw::BufferGet"  kind="output"    max_number="1">
+        </port>
+
+        <port name="cmdIn" data_type="Fw::Cmd"  kind="input" role="Cmd"    max_number="1">
+        </port>
+
+        <port name="PingResponse" data_type="Svc::Ping"  kind="output"    max_number="1">
+        </port>
+
+        <port name="PingRecv" data_type="Svc::Ping"  kind="async_input"    max_number="1">
+        </port>
+
+        <port name="bufferReturn" data_type="Fw::BufferSend"  kind="output"    max_number="1">
+        </port>
+
+        <port name="cmdResponseOut" data_type="Fw::CmdResponse"  kind="output" role="CmdResponse"    max_number="1">
+        </port>
+    </ports>
+
+</component>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?oxygen RNGSchema="file:../xml/ISF_Component_Schema.rnc" type="compact"?>
+
+<!--====================================================================== 
+
+  Neasc
+  neascout_science
+  Events
+
+======================================================================-->
+
+<events
+  event_base="$NeascoutScienceIdBase"
+>
+
+        <!-- for each action: processing complete -->
+        <event id="0" name="L1Complete" severity="ACTIVITY_LO" format_string = "L1_Complete" >
+            <comment> L1 Command Complete </comment>
+        </event>
+        
+        <event id="1" name="CropCompressComplete" severity="ACTIVITY_LO" format_string = "Crop_Compress_Complete" >
+            <comment> Crop/Compress Command Complete </comment>
+        </event>
+
+        <event id="2" name="CoadditionComplete" severity="ACTIVITY_LO" format_string = "Coaddition_Complete" >
+            <comment> Coaddition Command Complete </comment>
+        </event>
+
+        <event id="3" name="DetectionComplete" severity="ACTIVITY_LO" format_string = "Detection_Complete" >
+            <comment> Detection Command Complete </comment>
+        </event>
+
+        <event id="4" name="ImgStatComplete" severity="ACTIVITY_LO" format_string = "ImgStat_Complete" >
+            <comment> ImgStat Command Complete </comment>
+        </event>
+
+        <event id="5" name="asp_error" severity="WARNING_LO" format_string = "%s" >
+            <args>        
+                <arg name="error_code" type="string" size="122">
+                </arg>                
+            </args>            
+        </event>            
+     
+        <event id="6" name="asp_log" severity="ACTIVITY_LO" format_string = "%s" >
+            <args>        
+                <arg name="info_string" type="string" size="122">
+                </arg>                
+            </args>  
+        </event>
+        
+        <event id="7" name="MaskUpdateComplete" severity="ACTIVITY_LO" format_string = "MaskUpdate_Complete" >
+            <comment> Mask Update Command Complete </comment>
+        </event>
+        
+    </events>
